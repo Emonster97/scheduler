@@ -28,6 +28,7 @@ function Appointment(props) {
   );
 
   function save(name, interviewer) {
+    console.log("fireball");
     const interview = {
       student: name,
       interviewer,
