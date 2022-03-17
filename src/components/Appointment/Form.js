@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InterviewList from "components/InterviewList";
+import InterviewerList from "components/InterviewList";
 import Button from "components/Button";
 
 
@@ -53,9 +53,9 @@ function Form(props) {
           />
         </form>
         <section className="appointment__validation">{error}</section>
-        <InterviewList
+        <InterviewerList
           interviewers={props.interviewers}
-          interviewer={interviewer}
+          value={interviewer}
           onChange={setInterviewer}
         />
       </section>

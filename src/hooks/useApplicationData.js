@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const useApplicationData = function () {
+
+  // setting the state for the app
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -9,8 +11,8 @@ const useApplicationData = function () {
     interviewers: [],
   });
 
+  // books a new interview, creating an object attached to the appointment id
   function bookInterview(appointmentId, interview) {
-    console.log(appointmentId, interview);
     const appointment = {
       ...state.appointments[appointmentId],
       interview: { ...interview },
@@ -57,7 +59,7 @@ const useApplicationData = function () {
   };
 
   const setDay = (day) => setState({ ...state, day });
-
+// retrieve data from the server database for appointments, interviewers, and days
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),

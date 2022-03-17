@@ -31,7 +31,7 @@ export function getInterview(state, interview) {
 }
 
 export function getInterviewersForDay(state, day) {
-  const apps = state.days.filter((oneDay) => oneDay.name === day);
+  const apps = state.days.filter((eachDay) => eachDay.name === day);
  
   let dayInterviewers = [];
   if (apps[0] && apps[0].appointments) {
