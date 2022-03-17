@@ -1,15 +1,70 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+// STYLE
 import "components/Application.scss";
+// COMPONENTS
+import DayList from "./DayList";
+import Appointment from "./Appointment";
 
-export default function Application(props) {
+// HELPERS
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
+
+
+// HOOKS
+import useApplicationData from "hooks/useApplicationData";
+
+  export default function Application(props) {
+    const { state, setDay, bookInterview, cancelInterview } =
+      useApplicationData();
+  
+    const dailyAppointments = getAppointmentsForDay(state, state.day);
+    const dailyInterviewers = getInterviewersForDay(state, state.day);
+    // returns appointment list for selected day
+    const schedule = dailyAppointments.map((appt) => {
+      const interview = getInterview(state, appt.interview);
+  
+      return (
+        <Appointment
+          key={appt.id}
+          {... appt}
+          interview={interview}
+          interviewers={dailyInterviewers}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+        />
+      );
+    });
+
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
+      <img
+  className="sidebar--centered"
+  src="images/logo.png"
+  alt="Interview Scheduler"
+/>
+<hr className="sidebar__separator sidebar--centered" />
+<nav className="sidebar__menu">
+
+<DayList 
+  days={state.days} 
+  value={state.day} 
+  onChange={setDay} 
+/>
+  </nav>
+<img
+  className="sidebar__lhl sidebar--centered"
+  src="images/lhl.png"
+  alt="Lighthouse Labs"
+/>
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {schedule}
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
